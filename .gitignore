@@ -1,0 +1,29 @@
+# Node / npm (en caso de que uses herramientas de build más adelante)
+node_modules/
+dist/
+build/
+*.log
+
+# Editor / OS files
+.DS_Store
+Thumbs.db
+*.swp
+
+# Archivos temporales
+*.tmp
+*.bak
+
+# Archivos de sistema
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Archivos comprimidos (por si generas .zip para subir a la Chrome Web Store)
+*.zip
+
+# Personal Git config
+.gitconfig.local
+.env
+.env.local
+.env.*
