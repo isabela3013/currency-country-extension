@@ -1,4 +1,4 @@
-import { fetchCountries, fetchExchangeRate } from './utils/api.js';
+import { fetchCountries, getExchangeRate } from './utils/api.js';
 
 const countrySelect = document.getElementById("countrySelect");
 const infoContainer = document.getElementById("infoContainer");
@@ -18,7 +18,7 @@ async function populateCountries() {
 
 async function updateInfo() {
     const { name, currencyCode, flag } = JSON.parse(countrySelect.value);
-    const rate = await fetchExchangeRate(currencyCode);
+    const rate = await getExchangeRate(currencyCode);
 
     infoContainer.innerHTML = `
         <img src="${flag}" width="50">

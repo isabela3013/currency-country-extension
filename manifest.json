@@ -22,6 +22,6 @@
     },
     "host_permissions": [
         "https://restcountries.com/*",
-        "https://api.exchangerate.host/*"
+        "https://open.er-api.com/v6/*"
     ]
 }
