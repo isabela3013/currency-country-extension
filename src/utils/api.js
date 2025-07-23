@@ -23,29 +23,36 @@ export async function fetchCountries() {
 }
 
 // src/utils/exchangeRates.js
-export async function getExchangeRate(currencyCode) {
+export async function getExchangeRate(baseCurrency, targetCurrency) {
     return new Promise((resolve, reject) => {
         chrome.storage.local.get("cachedRates", async (result) => {
-            let rates = result.cachedRates;
+            let ratesMap = result.cachedRates || {};
 
-            // Si no está cacheado o es viejo
-            if (!rates || isCacheStale(rates.timestamp)) {
-                const res = await fetch("https://open.er-api.com/v6/latest/USD");
-                const data = await res.json();
+            const cachedEntry = ratesMap[baseCurrency];
 
-                if (!data.rates) {
-                    return reject("API error");
+            if (!cachedEntry || isCacheStale(cachedEntry.timestamp)) {
+                try {
+                    const res = await fetch(`https://open.er-api.com/v6/latest/${baseCurrency}`);
+                    const data = await res.json();
+
+                    if (!data.rates) {
+                        return reject("API error");
+                    }
+
+                    ratesMap[baseCurrency] = {
+                        timestamp: Date.now(),
+                        data: data.rates
+                    };
+
+                    chrome.storage.local.set({ cachedRates: ratesMap });
+                } catch (err) {
+                    console.error("Fetch failed", err);
+                    return reject("Fetch failed");
                 }
-
-                rates = {
-                    timestamp: Date.now(),
-                    data: data.rates
-                };
-
-                chrome.storage.local.set({ cachedRates: rates });
             }
 
-            resolve(rates.data[currencyCode] ?? "N/A");
+            const rate = ratesMap[baseCurrency].data?.[targetCurrency];
+            resolve(rate ?? "N/A");
         });
     });
 }

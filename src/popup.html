@@ -6,9 +6,26 @@
     <link rel="stylesheet" href="popup.css">
 </head>
 <body>
+    <!-- TITLE -->
     <h1>Conversor</h1>
-    <select id="countrySelect"></select>
+
+    <!-- AMOUNT INPUT -->
+    <label for="amountInput">
+        Amount:
+    </label>
+    <input type="number" id="amountInput" value="1" min="0" />
+
+    <!-- BASE CURRENCY SELECT -->
+    <label for="baseCurrency">Base Currency:</label>
+    <select id="baseCurrency"></select>
+
+    <!-- TARGET CURRENCY SELECT -->
+    <label for="targetCurrency">Convert To:</label>
+    <select id="targetCurrency"></select>
+
+    <!-- CONVERSION DATA -->
     <div id="infoContainer"></div>
+
     <script type="module" src="popup.js"></script>
 
     <a href="https://www.exchangerate-api.com">Rates By Exchange Rate API</a>
